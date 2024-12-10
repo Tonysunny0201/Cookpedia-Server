@@ -1,5 +1,5 @@
 const users = require('../models/userModel')
-const bcrypt = require('bcrypt') 
+const bcrypt = require('bcrypt'); 
 const jwt = require('jsonwebtoken')
 
 
@@ -15,7 +15,7 @@ exports.addUserController = async (req,res)=>{
         }else{
             const encryptedPassword = await bcrypt.hash(password,10)
             const newUser = new users({
-                username,email,password:encryptedPassword
+                username,email,password:encryptedPassword,profilePic:""
             })
             await newUser.save()
             res.status(200).json(newUser)
@@ -47,3 +47,21 @@ exports.loginController = async (req,res)=>{
         res.status(401).json(err)
     }
 }
+
+// edit user 
+exports.editUserController = async (req,res)=>{
+    console.log("inside editUserController");
+    const {profilePic} = req.body
+    const userId = req.userId
+    try{
+        const exisitingUser = await users.findById({_id:userId})
+        exisitingUser.profilePic = profilePic
+        await exisitingUser.save()
+        res.status(200).json(exisitingUser)
+    }catch(err){
+        res.status(401).json(err)
+    }
+    
+}
+
+
