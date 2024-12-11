@@ -47,3 +47,16 @@ exports.getUserDownloadListController = async(req,res)=>{
         res.status(401).json(err)
     }
 }
+
+// get all download recipes
+exports.getAllDownloadListController = async(req,res)=>{
+    console.log("inside getAllDownloadListController");
+    // find all documents from model
+    try{
+        const allDownloads = await downloadRecipes.find()
+        res.status(200).json(allDownloads)
+
+    }catch(err){
+        res.status(401).json(err)
+    }
+}

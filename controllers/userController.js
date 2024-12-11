@@ -64,4 +64,14 @@ exports.editUserController = async (req,res)=>{
     
 }
 
+// get all users
+exports.getAllUsersController = async(req,res)=>{
+    console.log("inside getAllUsersController");
+    try{
+        const allUsers = await users.find().skip(1)
+        res.status(200).json(allUsers)
 
+    }catch(err){
+        res.status(401).json(err)
+    }
+}
