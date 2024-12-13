@@ -50,6 +50,15 @@ router.get("/all-users",jwtMiddleware,userController.getAllUsersController)
 // all-downloadList
 router.get("/download-list",jwtMiddleware,downloadRecipeController.getAllDownloadListController)
 
+// all-testimony
+router.get("/all-feedback",jwtMiddleware,testimonyController.getAllFeedbackController)
+
+
+// update-testimony
+router.get("/feedback/:id/update",jwtMiddleware,testimonyController.updateFeedbackStatusController)
+
+// all-testimony
+router.get("/all-approved-feedback",testimonyController.getAllApprovedFeedbackController)
 
 
 module.exports = router

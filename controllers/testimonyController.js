@@ -16,3 +16,46 @@ exports.addTestimonyController = async(req,res)=>{
     }
     
 }
+
+
+// get all feedback 
+exports.getAllFeedbackController = async(req,res)=>{
+    console.log("inside getAllFeedbackController");
+    try{
+        allFeedbacks = await testimonials.find()
+        res.status(200).json(allFeedbacks)
+    }catch(err){
+        res.status(401).json(err)
+    }
+}
+
+// feedback status update 
+exports.updateFeedbackStatusController = async (req,res)=>{
+    console.log("inside updateFeedbackStatusController");
+    // get feedback id from url parameter
+    const {id} = req.params
+    // get status of feedback from url query
+    const status = req.query.status
+    // update status of feedback with given id
+    try{
+        const existingFeedback = await testimonials.findById({_id:id})
+        existingFeedback.status = status
+        await existingFeedback.save()
+        res.status(200).json(existingFeedback)
+    }catch(err){
+        res.status(401).json(err)
+    }  
+}
+
+// get all Approved feedback 
+exports.getAllApprovedFeedbackController = async(req,res)=>{
+    console.log("inside getAllApprovedFeedbackController");
+    try{
+        allApprovedFeedbacks = await testimonials.find({status:"Approved"})
+        res.status(200).json(allApprovedFeedbacks)
+    }catch(err){
+        res.status(401).json(err)
+    }
+}
+
+
